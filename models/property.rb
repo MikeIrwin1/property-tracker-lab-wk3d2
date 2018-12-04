@@ -22,14 +22,30 @@ class Property
     "
     values = [@value, @bedrooms, @year, @build]
     db.prepare("save", sql)
-    db.exec_prepared("save", values)
+    @id = db.exec_prepared("save", values)[0]['id'].to_i
     db.close()
-
   end
 
+  def update()
+    db = PG.connect({dbname: 'properties', host: 'localhost'})
+    sql = "UPDATE portfolio
+    SET (value, bedrooms, year, build) = ($1, $2, $3, $4)
+    WHERE id = $5"
+    values = [@value, @bedrooms, @year, @build, @id]
+    db.prepare("update", sql)
+    db.exec_prepared("update", values)
+    db.close()
+  end
 
-
-
+  def delete()
+    db = PG.connect({dbname: 'properties', host: 'localhost'})
+    sql = "DELETE FROM portfolio
+    WHERE id = $1"
+    values = [@id]
+    db.prepare("delete_one", sql)
+    db.exec_prepared("delete_one", values)
+    db.close()
+  end
 
 
 end
