@@ -10,5 +10,6 @@ property1.value = 12500
 property1.update
 
 property2.delete
+found_property = Property.find(2)
 binding.pry
 nil

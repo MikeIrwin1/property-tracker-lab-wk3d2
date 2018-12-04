@@ -45,6 +45,17 @@ class Property
     db.prepare("delete_one", sql)
     db.exec_prepared("delete_one", values)
     db.close()
+
+    def Property.find(id)
+      db = PG.connect({dbname: 'properties', host: 'localhost'})
+      sql = "SELECT * FROM portfolio
+      WHERE id = $1"
+      values = [id]
+      db.prepare("find_one", sql)
+      retrieved = db.exec_prepared("find_one", values)[0]
+      db.close()
+      return found_property = Property.new(retrieved)
+    end
   end
 
 
