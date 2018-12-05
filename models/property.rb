@@ -52,9 +52,11 @@ class Property
       WHERE id = $1"
       values = [id]
       db.prepare("find_one", sql)
-      retrieved = db.exec_prepared("find_one", values)[0]
+      retrieved_array = db.exec_prepared("find_one", values)
       db.close()
-      return found_property = Property.new(retrieved)
+      retrieved_hash = retrieved_array[0]
+      found_property = Property.new(retrieved_hash)
+      return found_property
     end
   end
 
